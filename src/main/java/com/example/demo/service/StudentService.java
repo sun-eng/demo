@@ -1,51 +1,37 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.QStudent;
 import com.example.demo.entity.Relation;
 import com.example.demo.exception.DemoException;
-import com.example.demo.repository.RelationRepository;
-import com.example.demo.repository.StudentRepository;
-import com.example.demo.util.RedisUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.example.demo.util.CommonPage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Transactional
-public class StudentService {
+public interface StudentService {
 
-    private static final int INT_ONE = 1;
+    /**
+     * 根据学号查询学生数量
+     * @param stuNo
+     * @return
+     */
+    public int sumStudentByStuNo(String stuNo);
 
-    @Autowired
-    RelationRepository relationRepository;
+    /**
+     * 学生可以查询本人每学年各学科成绩
+     * @param stuNo
+     * @param pageSize
+     * @param pageNum
+     * @return
+     */
+    public CommonPage<QStudent> findAllByStuNo(String stuNo, int pageSize, int pageNum) throws DemoException;
 
-    @Autowired
-    private StudentRepository studentRepository;
-
-    @Autowired
-    RedisUtil redisUtil;
-
-    public int sumStudentByStuNo(String stuNo){
-        return studentRepository.countStudentByStuNo(stuNo);
-    }
-
-    public Page<Map<String, Object>> findAllByStuNo(String stuNo, Pageable pageable) throws DemoException {
-        int num = studentRepository.countStudentByStuNo(stuNo);
-        if(num != INT_ONE){
-            throw new DemoException("用户信息错误");
-        }
-        return studentRepository.findRelationsByStuNo(stuNo, pageable);
-    }
-
-    public List<Relation> findAll() {
-        Object obj = redisUtil.get("demo_stuFindAll");
-        if(obj != null){
-            return (List<Relation>)obj;
-        }
-        return relationRepository.findAll();
-    }
+    /**
+     * 查询所有学生
+     * @return
+     */
+    public List<Relation> findAll();
 }

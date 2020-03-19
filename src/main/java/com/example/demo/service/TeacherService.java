@@ -1,68 +1,43 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Teacher;
+import com.example.demo.entity.QStubjectYear;
+import com.example.demo.entity.QSubjectTeacher;
+import com.example.demo.entity.QTeacherYear;
 import com.example.demo.exception.DemoException;
-import com.example.demo.repository.RelationRepository;
-import com.example.demo.repository.TeacherRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import com.example.demo.util.CommonPage;
 
-import java.util.Map;
+public interface TeacherService {
 
-@Service
-@Transactional
-public class TeacherService {
+    /**
+     * 教导主任查询每学年学科平均成绩,最高成绩,最低成绩
+     *
+     * @param teaNo
+     * @param pageSize
+     * @param pageNum
+     * @return
+     * @throws DemoException
+     */
+    public CommonPage<QStubjectYear> findScoreByYear(String teaNo, int pageSize, int pageNum) throws DemoException;
 
-    private static final String STR_ONE = "1";
+    /**
+     * 教导主任查询教师-学科平均成绩,最高成绩,最低成绩
+     *
+     * @param teaNo
+     * @param pageNum
+     * @param pageSize
+     * @return
+     * @throws DemoException
+     */
+    public CommonPage<QSubjectTeacher> findScoreByTea(String teaNo, int pageSize, int pageNum) throws DemoException;
 
-    private static final int INT_ONE = 1;
-
-    @Autowired
-    RelationRepository relationRepository;
-
-    @Autowired
-    TeacherRepository teacherRepository;
-
-    public Page<Map<String, Object>> findScoreByYear(String teaNo, Pageable pageable) throws DemoException {
-        int num = teacherRepository.countTeacherByTeaNo(teaNo);
-        if (num != INT_ONE) {
-            throw new DemoException("老师数据错误");
-        }
-        Teacher teacher = teacherRepository.findTeacherByTeaNo(teaNo);
-        String isAdmin = teacher.getIsAdmin();
-        if (!isAdmin.equals(STR_ONE)) {
-            throw new DemoException("无查询权限");
-        }
-        Page<Map<String, Object>> page = teacherRepository.findScoreByYear(pageable);
-        return page;
-    }
-
-
-    public Page<Map<String, Object>> findScoreByTea(String teaNo, Pageable pageable) throws DemoException {
-        int num = teacherRepository.countTeacherByTeaNo(teaNo);
-        if (num != INT_ONE) {
-            throw new DemoException("老师数据错误");
-        }
-        Teacher teacher = teacherRepository.findTeacherByTeaNo(teaNo);
-        String isAdmin = teacher.getIsAdmin();
-        if (!isAdmin.equals(STR_ONE)) {
-            throw new DemoException("无查询权限");
-        }
-        Page<Map<String, Object>> page = teacherRepository.findDetailScoreByTea(pageable);
-        return page;
-    }
-
-
-    public Page<Map<String, Object>> findScoreByTeaNo(String teaNo, Pageable pageable) throws DemoException {
-        int num = teacherRepository.countTeacherByTeaNo(teaNo);
-        if (num != INT_ONE) {
-            throw new DemoException("老师数据错误");
-        }
-        Page<Map<String, Object>> page = teacherRepository.findDetailScoreByTea(teaNo, pageable);
-        return page;
-    }
+    /**
+     * 查询教师本人每学年，学科平均成绩,最高成绩,最低成绩
+     * @param teaNo
+     * @param pageSize
+     * @param pageNum
+     * @return
+     * @throws DemoException
+     */
+    public CommonPage<QTeacherYear> findScoreByTeaNo(String teaNo, int pageSize, int pageNum) throws DemoException;
 
 }
