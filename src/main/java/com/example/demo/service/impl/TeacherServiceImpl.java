@@ -61,9 +61,9 @@ public class TeacherServiceImpl implements TeacherService {
         criteriaQuery.multiselect(
                 root.get("name").as(String.class).alias("subjectName"),
                 relation.get("stuYear").as(String.class).alias("stuYear"),
-                criteriaBuilder.avg(relation.get("score").as(BigDecimal.class)).alias("avgScore"),
-                criteriaBuilder.max(relation.get("score").as(BigDecimal.class)).alias("maxScore"),
-                criteriaBuilder.min(relation.get("score").as(BigDecimal.class)).alias("minScore")
+                criteriaBuilder.avg(relation.get("score").as(BigDecimal.class)),
+                criteriaBuilder.max(relation.get("score").as(BigDecimal.class)),
+                criteriaBuilder.min(relation.get("score").as(BigDecimal.class))
 
         );
 
@@ -108,9 +108,9 @@ public class TeacherServiceImpl implements TeacherService {
         criteriaQuery.multiselect(
                 teacherJoin.get("name").as(String.class).alias("teacherName"),
                 root.get("name").as(String.class).alias("subjectName"),
-                criteriaBuilder.avg(relation.get("score").as(BigDecimal.class)).alias("avgScore"),
-                criteriaBuilder.max(relation.get("score").as(BigDecimal.class)).alias("maxScore"),
-                criteriaBuilder.min(relation.get("score").as(BigDecimal.class)).alias("minScore")
+                criteriaBuilder.avg(relation.get("score").as(BigDecimal.class)),
+                criteriaBuilder.max(relation.get("score").as(BigDecimal.class)),
+                criteriaBuilder.min(relation.get("score").as(BigDecimal.class))
 
         );
 
@@ -154,9 +154,9 @@ public class TeacherServiceImpl implements TeacherService {
                 teacherJoin.get("name").as(String.class).alias("teacherName"),
                 root.get("name").as(String.class).alias("subjectName"),
                 relation.get("stuYear").as(String.class).alias("studyYear"),
-                criteriaBuilder.avg(relation.get("score").as(BigDecimal.class)).alias("avgScore"),
-                criteriaBuilder.max(relation.get("score").as(BigDecimal.class)).alias("maxScore"),
-                criteriaBuilder.min(relation.get("score").as(BigDecimal.class)).alias("minScore")
+                criteriaBuilder.avg(relation.get("score").as(BigDecimal.class)),
+                criteriaBuilder.max(relation.get("score").as(BigDecimal.class)),
+                criteriaBuilder.min(relation.get("score").as(BigDecimal.class))
 
         );
 

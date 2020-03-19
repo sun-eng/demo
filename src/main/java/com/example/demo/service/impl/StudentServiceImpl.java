@@ -62,9 +62,9 @@ public class StudentServiceImpl implements StudentService {
         Root<Subject> root = criteriaQuery.from(Subject.class);
         Join<Object, Object> relation = root.join("relation", JoinType.LEFT);
         criteriaQuery.multiselect(
-                root.get("name").as(String.class).alias("subjectName"),
-                relation.get("stuYear").as(String.class).alias("stuYear"),
-                relation.get("score").as(BigDecimal.class).alias("minScore")
+                root.get("name").as(String.class),
+                relation.get("stuYear").as(String.class),
+                relation.get("score").as(BigDecimal.class)
 
         );
 
