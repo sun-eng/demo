@@ -31,3 +31,9 @@ spring:
     properties:
         hibernate:
           dialect: org.hibernate.dialect.MySQLDialect
+
+logging:
+  file:
+    path: D:/
+    name: demo.log
+  level: debug
