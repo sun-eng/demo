@@ -1,22 +1,20 @@
-package com.example.demo.service;
+package com.example.demo.repository;
 
 import com.example.demo.dto.StudentDto;
-import com.example.demo.entity.StuTeaSubRelation;
 import com.example.demo.exception.DemoException;
 
 import java.util.List;
 
-public interface StudentService {
+public interface StudentCustomRepository {
 
     /**
      * 学生可以查询本人每学年各学科成绩
-     *
      * @param stuNo
      * @param pageSize
      * @param pageNum
      * @return
      */
-    List<StudentDto> findAllByStuNo(String stuNo, int pageSize, int pageNum) throws DemoException;
+     List<StudentDto> findAllByStuNo(String stuNo, int pageSize, int pageNum) throws DemoException;
 
 
     /**
@@ -25,11 +23,4 @@ public interface StudentService {
      * @return
      */
     int sumResultByStuNo(String stuNo);
-
-    /**
-     * 查询所有学生
-     *
-     * @return
-     */
-    List<StuTeaSubRelation> findAll();
 }

@@ -22,7 +22,7 @@ spring:
       fail-on-empty-beans: false
 
   jpa:
-    show-sql: true
+    show-sql: false
     hibernate:
       naming:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
@@ -31,9 +31,9 @@ spring:
     properties:
         hibernate:
           dialect: org.hibernate.dialect.MySQLDialect
-
 logging:
+  pattern:
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%class:%line] - %m%n"
   file:
-    path: D:/
     name: demo.log
-  level: debug
+    path: D:/logs/demo

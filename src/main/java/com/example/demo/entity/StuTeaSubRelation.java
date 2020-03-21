@@ -12,7 +12,7 @@ import java.util.Date;
 
 @Data
 @Entity(name = "relation")
-public class Relation {
+public class StuTeaSubRelation {
 
     @Id
     private Long id;

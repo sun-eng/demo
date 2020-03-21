@@ -1,4 +1,4 @@
-package com.example.demo.service;
+package com.example.demo.repository;
 
 import com.example.demo.dto.StubjectYearDto;
 import com.example.demo.dto.SubjectTeacherDto;
@@ -7,7 +7,7 @@ import com.example.demo.exception.DemoException;
 
 import java.util.List;
 
-public interface TeacherService {
+public interface TeacherCustomRepository {
 
     /**
      * 教导主任查询每学年学科平均成绩,最高成绩,最低成绩
@@ -58,6 +58,7 @@ public interface TeacherService {
      */
     List<TeacherYearDto> findScoreByTeaNo(String teaNo, int pageSize, int pageNum) throws DemoException;
 
+
     /**
      * 教导主任查询师本人每学年，学科成绩数据的总条数
      *
@@ -65,5 +66,4 @@ public interface TeacherService {
      * @return
      */
     int sumResultByTeaNo(String teaNo);
-
 }

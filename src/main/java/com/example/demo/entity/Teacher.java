@@ -41,5 +41,5 @@ public class Teacher {
 
     @OneToMany
     @JoinColumn(name = "teaId")
-    private List<Relation> relation;
+    private List<StuTeaSubRelation> stuTeaSubRelations;
 }

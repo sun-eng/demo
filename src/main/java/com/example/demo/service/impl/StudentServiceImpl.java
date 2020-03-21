@@ -1,14 +1,12 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.QStudent;
-import com.example.demo.entity.Relation;
-import com.example.demo.entity.Student;
-import com.example.demo.entity.Subject;
+import com.example.demo.dto.StudentDto;
+import com.example.demo.entity.StuTeaSubRelation;
 import com.example.demo.exception.DemoException;
-import com.example.demo.repository.RelationRepository;
+import com.example.demo.repository.StuTeaSubRelationRepository;
+import com.example.demo.repository.StudentCustomRepository;
 import com.example.demo.repository.StudentRepository;
 import com.example.demo.service.StudentService;
-import com.example.demo.util.CommonPage;
 import com.example.demo.util.RedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,11 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
-import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -31,67 +24,53 @@ public class StudentServiceImpl implements StudentService {
 
     private static final int INT_ONE = 1;
 
-    @PersistenceContext
-    private EntityManager em;
-
     @Autowired
-    RelationRepository relationRepository;
+    StuTeaSubRelationRepository stuTeaSubRelationRepository;
 
     @Autowired
     private StudentRepository studentRepository;
 
     @Autowired
+    private StudentCustomRepository studentCustomRepository;
+
+    @Autowired
     RedisUtil redisUtil;
 
     @Override
-    public int sumStudentByStuNo(String stuNo) {
-        return studentRepository.countStudentByStuNo(stuNo);
-    }
-
-    @Override
-    public CommonPage<QStudent> findAllByStuNo(String stuNo, int pageSize, int pageNum) throws DemoException {
+    public List<StudentDto> findAllByStuNo(String stuNo, int pageSize, int pageNum) throws DemoException {
         LOGGER.info("StudentServiceImpl findAllByStuNo enter with { stuNo : " + stuNo + ",pageSize : " + pageSize + ", pageNum : " + pageNum + "}");
         int num = studentRepository.countStudentByStuNo(stuNo);
         if (num != INT_ONE) {
-            LOGGER.error("StudentService findAllByStuNo : 用户信息错误");
+            LOGGER.error("StudentServiceImpl findAllByStuNo : 用户信息错误");
             throw new DemoException("用户信息错误");
         }
-        Student student = studentRepository.findStudentByStuNo(stuNo);
-        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<QStudent> criteriaQuery = criteriaBuilder.createQuery(QStudent.class);
-        Root<Subject> root = criteriaQuery.from(Subject.class);
-        Join<Object, Object> relation = root.join("relation", JoinType.LEFT);
-        criteriaQuery.multiselect(
-                root.get("name").as(String.class),
-                relation.get("stuYear").as(String.class),
-                relation.get("score").as(BigDecimal.class)
-
-        );
-
-        Predicate predicate = criteriaBuilder.equal(relation.get("stuId"), student.getId());
-        criteriaQuery.where(predicate);
-
-        TypedQuery<QStudent> query = em.createQuery(criteriaQuery);
-        // 获取总结果集
-        List<QStudent> totalList = query.getResultList();
-        query.setFirstResult((pageNum - 1) * pageSize);
-        query.setMaxResults(pageSize);
-        // 获取分页结果集
-        List<QStudent> resultList = query.getResultList();
-        CommonPage<QStudent> page = CommonPage.restPage(resultList, pageNum, pageSize, totalList.size());
-        LOGGER.info("StudentServiceImpl findAllByStuNo exit with page : " + page);
-        return page;
+        List<StudentDto> list = studentCustomRepository.findAllByStuNo(stuNo, pageSize, pageNum);
+        LOGGER.info("StudentServiceImpl findAllByStuNo exit with list : " + list);
+        return list;
     }
 
     @Override
-    public List<Relation> findAll() {
+    public int sumResultByStuNo(String stuNo) {
+        LOGGER.info("StudentServiceImpl sumResultByStuNo enter with { stuNo : " + stuNo +  "}");
+        int num = studentRepository.countStudentByStuNo(stuNo);
+        if (num != INT_ONE) {
+            LOGGER.error("StudentServiceImpl sumResultByStuNo : 用户信息错误");
+            throw new DemoException("用户信息错误");
+        }
+        int size = studentCustomRepository.sumResultByStuNo(stuNo);
+        LOGGER.info("StudentServiceImpl sumResultByStuNo exit with size : " + size);
+        return size;
+    }
+
+    @Override
+    public List<StuTeaSubRelation> findAll() {
         LOGGER.info("StudentServiceImpl findAll enter");
         Object obj = redisUtil.get("demo_stuFindAll");
         LOGGER.info("StudentServiceImpl findAll 读取redis数据为：" + obj);
         if (obj != null) {
-            return (List<Relation>) obj;
+            return (List<StuTeaSubRelation>) obj;
         } else {
-            List<Relation> all = relationRepository.findAll();
+            List<StuTeaSubRelation> all = stuTeaSubRelationRepository.findAll();
             redisUtil.set("demo_stuFindAll", all, 60 * 5);
             LOGGER.info("StudentServiceImpl findAll 从数据库重新获取值");
             return all;

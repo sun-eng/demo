@@ -31,10 +31,10 @@ public class Subject {
 
     @OneToMany
     @JoinColumn(name = "subId")
-    private List<Relation> relation;
+    private List<StuTeaSubRelation> stuTeaSubRelations;
 
     @OneToMany
     @JoinColumn(name = "subId")
-    private List<Teacher> teacher;
+    private List<Teacher> teachers;
 
 }
