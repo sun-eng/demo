@@ -6,32 +6,26 @@ import lombok.Data;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GeneratorType;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
-
-@Entity(name = "teacher")
 @Data
-public class Teacher {
+@Entity(name = "stu_tea_sub_relation")
+public class StuTeaSubRelationDO {
 
     @Id
     private Long id;
 
-    private String teaNo;
+    private Long stuId;
 
-    private String name;
-
-    private String sex;
-
-    private String age;
+    private Long teaId;
 
     private Long subId;
 
-    private String isAdmin;
+    private BigDecimal score;
+
+    private String stuYear;
 
     @GeneratorType(when = GenerationTime.INSERT, type = DateTimeGenerator.class)
     private Date gmtCreate;
@@ -39,7 +33,4 @@ public class Teacher {
     @GeneratorType(when = GenerationTime.ALWAYS, type = DateTimeGenerator.class)
     private Date gmtModified;
 
-    @OneToMany
-    @JoinColumn(name = "teaId")
-    private List<StuTeaSubRelation> stuTeaSubRelations;
 }

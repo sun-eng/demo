@@ -6,35 +6,30 @@ import lombok.Data;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GeneratorType;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Date;
-import java.util.List;
 
-@Entity(name = "subject")
+
+@Entity(name = "student")
 @Data
-public class Subject {
+public class StudentDO {
 
     @Id
     private Long id;
 
-    private String subNo;
+    private String stuNo;
 
     private String name;
 
-    private String teaId;
+    private String sex;
+
+    private String age;
 
     @GeneratorType(when = GenerationTime.INSERT, type = DateTimeGenerator.class)
     private Date gmtCreate;
 
     @GeneratorType(when = GenerationTime.ALWAYS, type = DateTimeGenerator.class)
     private Date gmtModified;
-
-    @OneToMany
-    @JoinColumn(name = "subId")
-    private List<StuTeaSubRelation> stuTeaSubRelations;
-
-    @OneToMany
-    @JoinColumn(name = "subId")
-    private List<Teacher> teachers;
 
 }

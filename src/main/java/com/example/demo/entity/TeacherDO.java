@@ -8,17 +8,20 @@ import org.hibernate.annotations.GeneratorType;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import java.util.Date;
+import java.util.List;
 
 
-@Entity(name = "student")
+@Entity(name = "teacher")
 @Data
-public class Student {
+public class TeacherDO {
 
     @Id
     private Long id;
 
-    private String stuNo;
+    private String teaNo;
 
     private String name;
 
@@ -26,10 +29,17 @@ public class Student {
 
     private String age;
 
+    private Long subId;
+
+    private String isAdmin;
+
     @GeneratorType(when = GenerationTime.INSERT, type = DateTimeGenerator.class)
     private Date gmtCreate;
 
     @GeneratorType(when = GenerationTime.ALWAYS, type = DateTimeGenerator.class)
     private Date gmtModified;
 
+    @OneToMany
+    @JoinColumn(name = "teaId")
+    private List<StuTeaSubRelationDO> stuTeaSubRelationDOs;
 }

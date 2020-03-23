@@ -1,13 +1,11 @@
 package com.example.demo.repository.impl;
 
-import com.example.demo.dto.StudentDto;
-import com.example.demo.entity.Student;
-import com.example.demo.entity.Subject;
+import com.example.demo.entity.StudentDO;
+import com.example.demo.entity.SubjectDO;
+import com.example.demo.entity.SubjectScoreDO;
 import com.example.demo.exception.DemoException;
 import com.example.demo.repository.StudentCustomRepository;
 import com.example.demo.repository.StudentRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -21,8 +19,6 @@ import java.util.List;
 @Repository
 public class StudentCustomRepositoryImpl implements StudentCustomRepository {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(StudentCustomRepositoryImpl.class);
-
     @PersistenceContext
     private EntityManager em;
 
@@ -30,52 +26,48 @@ public class StudentCustomRepositoryImpl implements StudentCustomRepository {
     private StudentRepository studentRepository;
 
     @Override
-    public List<StudentDto> findAllByStuNo(String stuNo, int pageSize, int pageNum) throws DemoException {
-        LOGGER.info("StudentCustomRepositoryImpl findAllByStuNo enter with { stuNo : " + stuNo + ",pageSize : " + pageSize + ", pageNum : " + pageNum + "}");
-        Student student = studentRepository.findStudentByStuNo(stuNo);
+    public List<SubjectScoreDO> findAllByStuNo(String stuNo, int pageSize, int pageNum) throws DemoException {
+        StudentDO studentDO = studentRepository.findStudentByStuNo(stuNo);
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<StudentDto> criteriaQuery = criteriaBuilder.createQuery(StudentDto.class);
-        Root<Subject> root = criteriaQuery.from(Subject.class);
-        Join<Object, Object> relation = root.join("stuTeaSubRelations", JoinType.LEFT);
+        CriteriaQuery<SubjectScoreDO> criteriaQuery = criteriaBuilder.createQuery(SubjectScoreDO.class);
+        Root<SubjectDO> root = criteriaQuery.from(SubjectDO.class);
+        Join<Object, Object> relation = root.join("stuTeaSubRelationDOs", JoinType.LEFT);
         criteriaQuery.multiselect(
                 root.get("name").as(String.class),
                 relation.get("stuYear").as(String.class),
                 relation.get("score").as(BigDecimal.class)
         );
 
-        Predicate predicate = criteriaBuilder.equal(relation.get("stuId"), student.getId());
+        Predicate predicate = criteriaBuilder.equal(relation.get("stuId"), studentDO.getId());
         criteriaQuery.where(predicate);
 
-        TypedQuery<StudentDto> query = em.createQuery(criteriaQuery);
+        TypedQuery<SubjectScoreDO> query = em.createQuery(criteriaQuery);
         query.setFirstResult((pageNum - 1) * pageSize);
         query.setMaxResults(pageSize);
         // 获取分页结果集
-        List<StudentDto> resultList = query.getResultList();
-        LOGGER.info("StudentCustomRepositoryImpl findAllByStuNo exit with resultList : " + resultList);
-        return resultList;
+        List<SubjectScoreDO> subjectScoreDOs = query.getResultList();
+        return subjectScoreDOs;
     }
 
     @Override
     public int sumResultByStuNo(String stuNo) {
-        LOGGER.info("StudentCustomRepositoryImpl sumResultByStuNo enter with { stuNo : " + stuNo + "}");
-        Student student = studentRepository.findStudentByStuNo(stuNo);
+        StudentDO studentDO = studentRepository.findStudentByStuNo(stuNo);
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<StudentDto> criteriaQuery = criteriaBuilder.createQuery(StudentDto.class);
-        Root<Subject> root = criteriaQuery.from(Subject.class);
-        Join<Object, Object> relation = root.join("stuTeaSubRelations", JoinType.LEFT);
+        CriteriaQuery<SubjectScoreDO> criteriaQuery = criteriaBuilder.createQuery(SubjectScoreDO.class);
+        Root<SubjectDO> root = criteriaQuery.from(SubjectDO.class);
+        Join<Object, Object> relation = root.join("stuTeaSubRelationDOs", JoinType.LEFT);
         criteriaQuery.multiselect(
                 root.get("name").as(String.class),
                 relation.get("stuYear").as(String.class),
                 relation.get("score").as(BigDecimal.class)
         );
 
-        Predicate predicate = criteriaBuilder.equal(relation.get("stuId"), student.getId());
+        Predicate predicate = criteriaBuilder.equal(relation.get("stuId"), studentDO.getId());
         criteriaQuery.where(predicate);
 
-        TypedQuery<StudentDto> query = em.createQuery(criteriaQuery);
+        TypedQuery<SubjectScoreDO> query = em.createQuery(criteriaQuery);
         // 获取总结果集
-        List<StudentDto> totalList = query.getResultList();
-        LOGGER.info("StudentCustomRepositoryImpl sumResultByStuNo exit with size : " + totalList.size());
-        return totalList.size();
+        List<SubjectScoreDO> subjectScoreDOs = query.getResultList();
+        return subjectScoreDOs.size();
     }
 }

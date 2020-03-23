@@ -7,30 +7,34 @@ import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GeneratorType;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
+@Entity(name = "subject")
 @Data
-@Entity(name = "relation")
-public class StuTeaSubRelation {
+public class SubjectDO {
 
     @Id
     private Long id;
 
-    private Long stuId;
+    private String subNo;
 
-    private Long teaId;
+    private String name;
 
-    private Long subId;
-
-    private BigDecimal score;
-
-    private String stuYear;
+    private String teaId;
 
     @GeneratorType(when = GenerationTime.INSERT, type = DateTimeGenerator.class)
     private Date gmtCreate;
 
     @GeneratorType(when = GenerationTime.ALWAYS, type = DateTimeGenerator.class)
     private Date gmtModified;
+
+    @OneToMany
+    @JoinColumn(name = "subId")
+    private List<StuTeaSubRelationDO> stuTeaSubRelationDOs;
+
+    @OneToMany
+    @JoinColumn(name = "subId")
+    private List<TeacherDO> teacherDOs;
 
 }

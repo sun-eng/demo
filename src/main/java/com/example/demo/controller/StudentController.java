@@ -1,9 +1,8 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.dto.StudentDto;
-import com.example.demo.entity.StuTeaSubRelation;
-import com.example.demo.exception.DemoException;
+import com.example.demo.dto.SubjectScoreDTO;
+import com.example.demo.entity.StuTeaSubRelationDO;
 import com.example.demo.service.StudentService;
 import com.example.demo.util.CommonPage;
 import com.nhsoft.provider.common.Response;
@@ -28,24 +27,16 @@ public class StudentController {
     public Response find(@ApiParam("学号") @RequestParam("stuNo") String stuNo,
                          @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                          @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
-        try {
-            List<StudentDto> list = studentService.findAllByStuNo(stuNo, pageSize, pageNum);
-            int total = studentService.sumResultByStuNo(stuNo);
-            CommonPage<StudentDto> page = CommonPage.restPage(list, pageNum, pageSize, total);
-            return Response.data(page);
-        } catch (DemoException e) {
-            return Response.error(500, e.getMessage());
-        }
+        List<SubjectScoreDTO> subjectScoreDTOs = studentService.findAllByStuNo(stuNo, pageSize, pageNum);
+        int total = studentService.sumResultByStuNo(stuNo);
+        CommonPage<SubjectScoreDTO> page = CommonPage.restPage(subjectScoreDTOs, pageNum, pageSize, total);
+        return Response.data(page);
+
     }
 
     @RequestMapping("/findAll")
     public Response findAll() {
-        try {
-            List<StuTeaSubRelation> page = studentService.findAll();
-            return Response.data(page);
-        } catch (DemoException e) {
-            return Response.error(500, e.getMessage());
-        }
-
+        List<StuTeaSubRelationDO> stuTeaSubRelationDOs = studentService.findAll();
+        return Response.data(stuTeaSubRelationDOs);
     }
 }

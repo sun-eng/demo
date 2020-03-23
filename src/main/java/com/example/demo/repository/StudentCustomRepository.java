@@ -1,6 +1,6 @@
 package com.example.demo.repository;
 
-import com.example.demo.dto.StudentDto;
+import com.example.demo.entity.SubjectScoreDO;
 import com.example.demo.exception.DemoException;
 
 import java.util.List;
@@ -14,7 +14,7 @@ public interface StudentCustomRepository {
      * @param pageNum
      * @return
      */
-     List<StudentDto> findAllByStuNo(String stuNo, int pageSize, int pageNum) throws DemoException;
+     List<SubjectScoreDO> findAllByStuNo(String stuNo, int pageSize, int pageNum) throws DemoException;
 
 
     /**

@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.StudentDto;
-import com.example.demo.entity.StuTeaSubRelation;
+import com.example.demo.dto.SubjectScoreDTO;
+import com.example.demo.entity.StuTeaSubRelationDO;
 import com.example.demo.exception.DemoException;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public interface StudentService {
      * @param pageNum
      * @return
      */
-    List<StudentDto> findAllByStuNo(String stuNo, int pageSize, int pageNum) throws DemoException;
+    List<SubjectScoreDTO> findAllByStuNo(String stuNo, Integer pageSize, Integer pageNum) throws DemoException;
 
 
     /**
@@ -31,5 +31,5 @@ public interface StudentService {
      *
      * @return
      */
-    List<StuTeaSubRelation> findAll();
+    List<StuTeaSubRelationDO> findAll();
 }

@@ -1,4 +1,4 @@
-package com.example.demo.dto;
+package com.example.demo.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,13 +7,11 @@ import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
-public class TeacherYearDto {
+public class SubjectTeacherDO {
 
     private String teatcherName;
 
     private String subjectName;
-
-    private String studyYear;
 
     private Double avgScore;
 

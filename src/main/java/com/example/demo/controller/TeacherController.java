@@ -1,9 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.StubjectYearDto;
-import com.example.demo.dto.SubjectTeacherDto;
-import com.example.demo.dto.TeacherYearDto;
-import com.example.demo.exception.DemoException;
+import com.example.demo.dto.SubjectTeacherDTO;
+import com.example.demo.dto.SubjectYearDTO;
+import com.example.demo.dto.TeacherYearDTO;
 import com.example.demo.service.TeacherService;
 import com.example.demo.util.CommonPage;
 import com.nhsoft.provider.common.Response;
@@ -30,14 +29,10 @@ public class TeacherController {
     public Response findScoreByYear(@ApiParam("老师编号") @RequestParam("teaNo") String teaNo,
                                     @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                     @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
-        try {
-            List<StubjectYearDto> list = teacherService.findScoreByYear(teaNo, pageSize, pageNum);
-            int total = teacherService.sumResultByYear(teaNo);
-            CommonPage<StubjectYearDto> page = CommonPage.restPage(list, pageNum, pageSize, total);
-            return Response.data(page);
-        } catch (DemoException e) {
-            return Response.error(500, e.getMessage());
-        }
+        List<SubjectYearDTO> list = teacherService.findScoreByYear(teaNo, pageSize, pageNum);
+        int total = teacherService.sumResultByYear(teaNo);
+        CommonPage<SubjectYearDTO> page = CommonPage.restPage(list, pageNum, pageSize, total);
+        return Response.data(page);
     }
 
     @ApiOperation(value = "教导主任查询教师-学科平均成绩,最高成绩,最低成绩")
@@ -45,14 +40,10 @@ public class TeacherController {
     public Response findScoreByTea(@ApiParam("老师编号") @RequestParam("teaNo") String teaNo,
                                    @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                    @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
-        try {
-            List<SubjectTeacherDto> list = teacherService.findScoreByTea(teaNo, pageSize, pageNum);
-            int total = teacherService.sumResultByTea(teaNo);
-            CommonPage<SubjectTeacherDto> page = CommonPage.restPage(list, pageNum, pageSize, total);
-            return Response.data(page);
-        } catch (DemoException e) {
-            return Response.error(500, e.getMessage());
-        }
+        List<SubjectTeacherDTO> list = teacherService.findScoreByTea(teaNo, pageSize, pageNum);
+        int total = teacherService.sumResultByTea(teaNo);
+        CommonPage<SubjectTeacherDTO> page = CommonPage.restPage(list, pageNum, pageSize, total);
+        return Response.data(page);
     }
 
     @ApiOperation(value = "查询教师本人每学年，学科平均成绩,最高成绩,最低成绩")
@@ -60,15 +51,10 @@ public class TeacherController {
     public Response findScoreByTeaNo(@ApiParam("老师编号") @RequestParam("teaNo") String teaNo,
                                      @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                      @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
-        try {
-            List<TeacherYearDto> list = teacherService.findScoreByTeaNo(teaNo, pageSize, pageNum);
-            int total = teacherService.sumResultByTeaNo(teaNo);
-            CommonPage<TeacherYearDto> page = CommonPage.restPage(list, pageNum, pageSize, total);
-            return Response.data(page);
-        } catch (DemoException e) {
-            return Response.error(500, e.getMessage());
-        }
-
+        List<TeacherYearDTO> list = teacherService.findScoreByTeaNo(teaNo, pageSize, pageNum);
+        int total = teacherService.sumResultByTeaNo(teaNo);
+        CommonPage<TeacherYearDTO> page = CommonPage.restPage(list, pageNum, pageSize, total);
+        return Response.data(page);
     }
 
 }

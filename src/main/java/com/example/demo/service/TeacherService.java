@@ -1,8 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.StubjectYearDto;
-import com.example.demo.dto.SubjectTeacherDto;
-import com.example.demo.dto.TeacherYearDto;
+import com.example.demo.dto.SubjectYearDTO;
+import com.example.demo.dto.SubjectTeacherDTO;
+import com.example.demo.dto.TeacherYearDTO;
 import com.example.demo.exception.DemoException;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public interface TeacherService {
      * @return
      * @throws DemoException
      */
-    List<StubjectYearDto> findScoreByYear(String teaNo, int pageSize, int pageNum) throws DemoException;
+    List<SubjectYearDTO> findScoreByYear(String teaNo, Integer pageSize, Integer pageNum) throws DemoException;
 
     /**
      * 教导主任查询每学年学科成绩数据的总条数
@@ -37,7 +37,7 @@ public interface TeacherService {
      * @return
      * @throws DemoException
      */
-    List<SubjectTeacherDto> findScoreByTea(String teaNo, int pageSize, int pageNum) throws DemoException;
+    List<SubjectTeacherDTO> findScoreByTea(String teaNo, Integer pageSize, Integer pageNum) throws DemoException;
 
     /**
      * 教导主任查询教师-学科成绩数据的总条数
@@ -56,7 +56,7 @@ public interface TeacherService {
      * @return
      * @throws DemoException
      */
-    List<TeacherYearDto> findScoreByTeaNo(String teaNo, int pageSize, int pageNum) throws DemoException;
+    List<TeacherYearDTO> findScoreByTeaNo(String teaNo, Integer pageSize, Integer pageNum) throws DemoException;
 
     /**
      * 教导主任查询师本人每学年，学科成绩数据的总条数
