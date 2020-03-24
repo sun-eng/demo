@@ -18,7 +18,7 @@
     </appender>
 
     <!-- 文件保存日志的相关配置 -->
-    <appender name="ERROR-OUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="FILE-OUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 保存日志文件的路径 -->
         <file>D:/logs/demo/demo.log</file>
         <!-- 日志格式 -->
@@ -46,6 +46,6 @@
     <!-- 基于info处理日志：具体控制台或者文件对日志级别的处理还要看所在appender配置的filter，如果没有配置filter，则使用root配置 -->
     <root level="info">
         <appender-ref ref="STDOUT" />
-        <appender-ref ref="ERROR-OUT" />
+        <appender-ref ref="FILE-OUT" />
     </root>
 </configuration>
