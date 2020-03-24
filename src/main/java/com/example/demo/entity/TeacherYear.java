@@ -7,12 +7,18 @@ import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
-public class SubjectScoreDO {
+public class TeacherYear {
+
+    private String teatcherName;
 
     private String subjectName;
 
     private String studyYear;
 
-    private BigDecimal score;
+    private Double avgScore;
+
+    private BigDecimal maxScore;
+
+    private BigDecimal minScore;
 
 }

@@ -1,9 +1,9 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.TeacherDO;
+import com.example.demo.entity.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TeacherRepository extends JpaRepository<TeacherDO, Long>{
+public interface TeacherRepository extends JpaRepository<Teacher, Long>{
 
     /**
      * 根据老师编号查找老师数量
@@ -19,6 +19,6 @@ public interface TeacherRepository extends JpaRepository<TeacherDO, Long>{
      * @param teaNo
      * @return
      */
-    TeacherDO findTeacherByTeaNo(String teaNo);
+    Teacher findTeacherByTeaNo(String teaNo);
 
 }

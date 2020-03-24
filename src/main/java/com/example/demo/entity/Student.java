@@ -3,38 +3,38 @@ package com.example.demo.entity;
 
 import com.example.demo.util.DateTimeGenerator;
 import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GeneratorType;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
-import java.util.List;
 
-@Entity(name = "subject")
+
+@Entity(name = "student")
 @Data
-public class SubjectDO {
+@DynamicUpdate
+public class Student {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String subNo;
+    private String stuNo;
 
     private String name;
 
-    private String teaId;
+    private String sex;
+
+    private String age;
 
     @GeneratorType(when = GenerationTime.INSERT, type = DateTimeGenerator.class)
     private Date gmtCreate;
 
     @GeneratorType(when = GenerationTime.ALWAYS, type = DateTimeGenerator.class)
     private Date gmtModified;
-
-    @OneToMany
-    @JoinColumn(name = "subId")
-    private List<StuTeaSubRelationDO> stuTeaSubRelationDOs;
-
-    @OneToMany
-    @JoinColumn(name = "subId")
-    private List<TeacherDO> teacherDOs;
 
 }

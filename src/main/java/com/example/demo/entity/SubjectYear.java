@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
-public class SubjectYearDO {
+public class SubjectYear {
 
     private String subjectName;
 

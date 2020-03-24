@@ -31,9 +31,4 @@ spring:
     properties:
         hibernate:
           dialect: org.hibernate.dialect.MySQLDialect
-logging:
-  pattern:
-    file: "%d{yyyy-MM-dd HH:mm:ss} [%class:%line] - %m%n"
-  file:
-    name: demo.log
-    path: D:/logs/demo
+

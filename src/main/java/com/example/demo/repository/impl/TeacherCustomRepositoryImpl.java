@@ -1,9 +1,9 @@
 package com.example.demo.repository.impl;
 
-import com.example.demo.entity.SubjectDO;
-import com.example.demo.entity.SubjectTeacherDO;
-import com.example.demo.entity.SubjectYearDO;
-import com.example.demo.entity.TeacherYearDO;
+import com.example.demo.entity.Subject;
+import com.example.demo.entity.SubjectTeacher;
+import com.example.demo.entity.SubjectYear;
+import com.example.demo.entity.TeacherYear;
 import com.example.demo.repository.TeacherCustomRepository;
 import org.springframework.stereotype.Repository;
 
@@ -21,11 +21,11 @@ public class TeacherCustomRepositoryImpl implements TeacherCustomRepository {
     private EntityManager em;
 
     @Override
-    public List<SubjectYearDO> findScoreByYear(Integer pageSize, Integer pageNum) {
+    public List<SubjectYear> findScoreByYear(Integer offset, Integer limit) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<SubjectYearDO> criteriaQuery = criteriaBuilder.createQuery(SubjectYearDO.class);
-        Root<SubjectDO> root = criteriaQuery.from(SubjectDO.class);
-        Join<Object, Object> relation = root.join("stuTeaSubRelationDOs", JoinType.LEFT);
+        CriteriaQuery<SubjectYear> criteriaQuery = criteriaBuilder.createQuery(SubjectYear.class);
+        Root<Subject> root = criteriaQuery.from(Subject.class);
+        Join<Object, Object> relation = root.join("stuTeaSubRelations", JoinType.LEFT);
         criteriaQuery.multiselect(
                 root.get("name").as(String.class).alias("subjectName"),
                 relation.get("stuYear").as(String.class).alias("stuYear"),
@@ -40,20 +40,20 @@ public class TeacherCustomRepositoryImpl implements TeacherCustomRepository {
                 relation.get("stuYear").as(String.class)
         );
 
-        TypedQuery<SubjectYearDO> query = em.createQuery(criteriaQuery);
-        query.setFirstResult((pageNum - 1) * pageSize);
-        query.setMaxResults(pageSize);
+        TypedQuery<SubjectYear> query = em.createQuery(criteriaQuery);
+        query.setFirstResult(offset);
+        query.setMaxResults(limit);
         // 获取分页结果集
-        List<SubjectYearDO> subjectYearDOs = query.getResultList();
-        return subjectYearDOs;
+        List<SubjectYear> subjectYears = query.getResultList();
+        return subjectYears;
     }
 
     @Override
     public int sumResultByYear() {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<SubjectYearDO> criteriaQuery = criteriaBuilder.createQuery(SubjectYearDO.class);
-        Root<SubjectDO> root = criteriaQuery.from(SubjectDO.class);
-        Join<Object, Object> relation = root.join("stuTeaSubRelationDOs", JoinType.LEFT);
+        CriteriaQuery<SubjectYear> criteriaQuery = criteriaBuilder.createQuery(SubjectYear.class);
+        Root<Subject> root = criteriaQuery.from(Subject.class);
+        Join<Object, Object> relation = root.join("stuTeaSubRelations", JoinType.LEFT);
         criteriaQuery.multiselect(
                 root.get("name").as(String.class).alias("subjectName"),
                 relation.get("stuYear").as(String.class).alias("stuYear"),
@@ -67,19 +67,19 @@ public class TeacherCustomRepositoryImpl implements TeacherCustomRepository {
                 relation.get("stuYear").as(String.class)
         );
 
-        TypedQuery<SubjectYearDO> query = em.createQuery(criteriaQuery);
+        TypedQuery<SubjectYear> query = em.createQuery(criteriaQuery);
         // 获取总结果集
-        List<SubjectYearDO> subjectYearDOs = query.getResultList();
-        return subjectYearDOs.size();
+        List<SubjectYear> subjectYears = query.getResultList();
+        return subjectYears.size();
     }
 
     @Override
-    public List<SubjectTeacherDO> findScoreByTea(Integer pageSize, Integer pageNum) {
+    public List<SubjectTeacher> findScoreByTea(Integer offset, Integer limit) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<SubjectTeacherDO> criteriaQuery = criteriaBuilder.createQuery(SubjectTeacherDO.class);
-        Root<SubjectDO> root = criteriaQuery.from(SubjectDO.class);
-        Join<Object, Object> teacherJoin = root.join("teacherDOs", JoinType.LEFT);
-        Join<Object, Object> relation = teacherJoin.join("stuTeaSubRelationDOs", JoinType.LEFT);
+        CriteriaQuery<SubjectTeacher> criteriaQuery = criteriaBuilder.createQuery(SubjectTeacher.class);
+        Root<Subject> root = criteriaQuery.from(Subject.class);
+        Join<Object, Object> teacherJoin = root.join("teachers", JoinType.LEFT);
+        Join<Object, Object> relation = teacherJoin.join("stuTeaSubRelations", JoinType.LEFT);
         criteriaQuery.multiselect(
                 teacherJoin.get("name").as(String.class).alias("teacherName"),
                 root.get("name").as(String.class).alias("subjectName"),
@@ -98,21 +98,21 @@ public class TeacherCustomRepositoryImpl implements TeacherCustomRepository {
                 relation.get("teaId").as(Long.class)
         );
 
-        TypedQuery<SubjectTeacherDO> query = em.createQuery(criteriaQuery);
-        query.setFirstResult((pageNum - 1) * pageSize);
-        query.setMaxResults(pageSize);
+        TypedQuery<SubjectTeacher> query = em.createQuery(criteriaQuery);
+        query.setFirstResult(offset);
+        query.setMaxResults(limit);
         // 获取分页结果集
-        List<SubjectTeacherDO> subjectTeacherDOs = query.getResultList();
-        return subjectTeacherDOs;
+        List<SubjectTeacher> subjectTeachers = query.getResultList();
+        return subjectTeachers;
     }
 
     @Override
     public int sumResultByTea() {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<SubjectTeacherDO> criteriaQuery = criteriaBuilder.createQuery(SubjectTeacherDO.class);
-        Root<SubjectDO> root = criteriaQuery.from(SubjectDO.class);
-        Join<Object, Object> teacherJoin = root.join("teacherDOs", JoinType.LEFT);
-        Join<Object, Object> relation = teacherJoin.join("stuTeaSubRelationDOs", JoinType.LEFT);
+        CriteriaQuery<SubjectTeacher> criteriaQuery = criteriaBuilder.createQuery(SubjectTeacher.class);
+        Root<Subject> root = criteriaQuery.from(Subject.class);
+        Join<Object, Object> teacherJoin = root.join("teachers", JoinType.LEFT);
+        Join<Object, Object> relation = teacherJoin.join("stuTeaSubRelations", JoinType.LEFT);
         criteriaQuery.multiselect(
                 teacherJoin.get("name").as(String.class).alias("teacherName"),
                 root.get("name").as(String.class).alias("subjectName"),
@@ -130,19 +130,19 @@ public class TeacherCustomRepositoryImpl implements TeacherCustomRepository {
                 relation.get("teaId").as(Long.class)
         );
 
-        TypedQuery<SubjectTeacherDO> query = em.createQuery(criteriaQuery);
+        TypedQuery<SubjectTeacher> query = em.createQuery(criteriaQuery);
         // 获取总结果集
-        List<SubjectTeacherDO> subjectTeacherDOs = query.getResultList();
-        return subjectTeacherDOs.size();
+        List<SubjectTeacher> subjectTeachers = query.getResultList();
+        return subjectTeachers.size();
     }
 
     @Override
-    public List<TeacherYearDO> findScoreByTeaNo(String teaNo, Integer pageSize, Integer pageNum) {
+    public List<TeacherYear> findScoreByTeaNo(String teaNo, Integer offset, Integer limit) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<TeacherYearDO> criteriaQuery = criteriaBuilder.createQuery(TeacherYearDO.class);
-        Root<SubjectDO> root = criteriaQuery.from(SubjectDO.class);
-        Join<Object, Object> teacherJoin = root.join("teacherDOs", JoinType.LEFT);
-        Join<Object, Object> relation = teacherJoin.join("stuTeaSubRelationDOs", JoinType.LEFT);
+        CriteriaQuery<TeacherYear> criteriaQuery = criteriaBuilder.createQuery(TeacherYear.class);
+        Root<Subject> root = criteriaQuery.from(Subject.class);
+        Join<Object, Object> teacherJoin = root.join("teachers", JoinType.LEFT);
+        Join<Object, Object> relation = teacherJoin.join("stuTeaSubRelations", JoinType.LEFT);
         criteriaQuery.multiselect(
                 teacherJoin.get("name").as(String.class).alias("teacherName"),
                 root.get("name").as(String.class).alias("subjectName"),
@@ -163,21 +163,21 @@ public class TeacherCustomRepositoryImpl implements TeacherCustomRepository {
                 relation.get("stuYear").as(String.class)
         );
 
-        TypedQuery<TeacherYearDO> query = em.createQuery(criteriaQuery);
-        query.setFirstResult((pageNum - 1) * pageSize);
-        query.setMaxResults(pageSize);
+        TypedQuery<TeacherYear> query = em.createQuery(criteriaQuery);
+        query.setFirstResult(offset);
+        query.setMaxResults(limit);
         // 获取分页结果集
-        List<TeacherYearDO> teacherYearDOs = query.getResultList();
-        return teacherYearDOs;
+        List<TeacherYear> teacherYears = query.getResultList();
+        return teacherYears;
     }
 
     @Override
     public int sumResultByTeaNo(String teaNo) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<TeacherYearDO> criteriaQuery = criteriaBuilder.createQuery(TeacherYearDO.class);
-        Root<SubjectDO> root = criteriaQuery.from(SubjectDO.class);
-        Join<Object, Object> teacherJoin = root.join("teacherDOs", JoinType.LEFT);
-        Join<Object, Object> relation = teacherJoin.join("stuTeaSubRelationDOs", JoinType.LEFT);
+        CriteriaQuery<TeacherYear> criteriaQuery = criteriaBuilder.createQuery(TeacherYear.class);
+        Root<Subject> root = criteriaQuery.from(Subject.class);
+        Join<Object, Object> teacherJoin = root.join("teachers", JoinType.LEFT);
+        Join<Object, Object> relation = teacherJoin.join("stuTeaSubRelations", JoinType.LEFT);
         criteriaQuery.multiselect(
                 teacherJoin.get("name").as(String.class).alias("teacherName"),
                 root.get("name").as(String.class).alias("subjectName"),
@@ -198,9 +198,9 @@ public class TeacherCustomRepositoryImpl implements TeacherCustomRepository {
                 relation.get("stuYear").as(String.class)
         );
 
-        TypedQuery<TeacherYearDO> query = em.createQuery(criteriaQuery);
+        TypedQuery<TeacherYear> query = em.createQuery(criteriaQuery);
         // 获取总结果集
-        List<TeacherYearDO> teacherYearDOs = query.getResultList();
-        return teacherYearDOs.size();
+        List<TeacherYear> teacherYears = query.getResultList();
+        return teacherYears.size();
     }
 }

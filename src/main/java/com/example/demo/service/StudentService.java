@@ -1,7 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.SubjectScoreDTO;
-import com.example.demo.entity.StuTeaSubRelationDO;
+import com.example.demo.entity.StuTeaSubRelation;
+import com.example.demo.entity.Student;
+import com.example.demo.entity.SubjectScore;
 import com.example.demo.exception.DemoException;
 
 import java.util.List;
@@ -12,11 +13,11 @@ public interface StudentService {
      * 学生可以查询本人每学年各学科成绩
      *
      * @param stuNo
-     * @param pageSize
-     * @param pageNum
+     * @param offset
+     * @param limit
      * @return
      */
-    List<SubjectScoreDTO> findAllByStuNo(String stuNo, Integer pageSize, Integer pageNum) throws DemoException;
+    List<SubjectScore> findAllByStuNo(String stuNo, Integer offset, Integer limit) throws DemoException;
 
 
     /**
@@ -31,5 +32,17 @@ public interface StudentService {
      *
      * @return
      */
-    List<StuTeaSubRelationDO> findAll();
+    List<StuTeaSubRelation> findAll();
+
+    /**
+     * 保存学生
+     * @param student
+     */
+    void saveStudent(Student student);
+
+    /**
+     * 更新学生
+     * @param student
+     */
+    void updateStudent(Student student);
 }

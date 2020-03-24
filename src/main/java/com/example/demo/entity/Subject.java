@@ -3,34 +3,41 @@ package com.example.demo.entity;
 
 import com.example.demo.util.DateTimeGenerator;
 import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GeneratorType;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
+@Entity(name = "subject")
 @Data
-@Entity(name = "stu_tea_sub_relation")
-public class StuTeaSubRelationDO {
+@DynamicUpdate
+public class Subject {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Long stuId;
+    private String subNo;
 
-    private Long teaId;
+    private String name;
 
-    private Long subId;
-
-    private BigDecimal score;
-
-    private String stuYear;
+    private String teaId;
 
     @GeneratorType(when = GenerationTime.INSERT, type = DateTimeGenerator.class)
     private Date gmtCreate;
 
     @GeneratorType(when = GenerationTime.ALWAYS, type = DateTimeGenerator.class)
     private Date gmtModified;
+
+    @OneToMany
+    @JoinColumn(name = "subId")
+    private List<StuTeaSubRelation> stuTeaSubRelations;
+
+    @OneToMany
+    @JoinColumn(name = "subId")
+    private List<Teacher> teachers;
 
 }

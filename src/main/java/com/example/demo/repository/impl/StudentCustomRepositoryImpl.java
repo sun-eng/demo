@@ -1,8 +1,8 @@
 package com.example.demo.repository.impl;
 
-import com.example.demo.entity.StudentDO;
-import com.example.demo.entity.SubjectDO;
-import com.example.demo.entity.SubjectScoreDO;
+import com.example.demo.entity.Student;
+import com.example.demo.entity.Subject;
+import com.example.demo.entity.SubjectScore;
 import com.example.demo.exception.DemoException;
 import com.example.demo.repository.StudentCustomRepository;
 import com.example.demo.repository.StudentRepository;
@@ -26,48 +26,48 @@ public class StudentCustomRepositoryImpl implements StudentCustomRepository {
     private StudentRepository studentRepository;
 
     @Override
-    public List<SubjectScoreDO> findAllByStuNo(String stuNo, int pageSize, int pageNum) throws DemoException {
-        StudentDO studentDO = studentRepository.findStudentByStuNo(stuNo);
+    public List<SubjectScore> findAllByStuNo(String stuNo, Integer offset, Integer limit) throws DemoException {
+        Student student = studentRepository.findStudentByStuNo(stuNo);
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<SubjectScoreDO> criteriaQuery = criteriaBuilder.createQuery(SubjectScoreDO.class);
-        Root<SubjectDO> root = criteriaQuery.from(SubjectDO.class);
-        Join<Object, Object> relation = root.join("stuTeaSubRelationDOs", JoinType.LEFT);
+        CriteriaQuery<SubjectScore> criteriaQuery = criteriaBuilder.createQuery(SubjectScore.class);
+        Root<Subject> root = criteriaQuery.from(Subject.class);
+        Join<Object, Object> relation = root.join("stuTeaSubRelations", JoinType.LEFT);
         criteriaQuery.multiselect(
                 root.get("name").as(String.class),
                 relation.get("stuYear").as(String.class),
                 relation.get("score").as(BigDecimal.class)
         );
 
-        Predicate predicate = criteriaBuilder.equal(relation.get("stuId"), studentDO.getId());
+        Predicate predicate = criteriaBuilder.equal(relation.get("stuId"), student.getId());
         criteriaQuery.where(predicate);
 
-        TypedQuery<SubjectScoreDO> query = em.createQuery(criteriaQuery);
-        query.setFirstResult((pageNum - 1) * pageSize);
-        query.setMaxResults(pageSize);
+        TypedQuery<SubjectScore> query = em.createQuery(criteriaQuery);
+        query.setFirstResult(offset);
+        query.setMaxResults(limit);
         // 获取分页结果集
-        List<SubjectScoreDO> subjectScoreDOs = query.getResultList();
-        return subjectScoreDOs;
+        List<SubjectScore> subjectScores = query.getResultList();
+        return subjectScores;
     }
 
     @Override
     public int sumResultByStuNo(String stuNo) {
-        StudentDO studentDO = studentRepository.findStudentByStuNo(stuNo);
+        Student student = studentRepository.findStudentByStuNo(stuNo);
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<SubjectScoreDO> criteriaQuery = criteriaBuilder.createQuery(SubjectScoreDO.class);
-        Root<SubjectDO> root = criteriaQuery.from(SubjectDO.class);
-        Join<Object, Object> relation = root.join("stuTeaSubRelationDOs", JoinType.LEFT);
+        CriteriaQuery<SubjectScore> criteriaQuery = criteriaBuilder.createQuery(SubjectScore.class);
+        Root<Subject> root = criteriaQuery.from(Subject.class);
+        Join<Object, Object> relation = root.join("stuTeaSubRelations", JoinType.LEFT);
         criteriaQuery.multiselect(
                 root.get("name").as(String.class),
                 relation.get("stuYear").as(String.class),
                 relation.get("score").as(BigDecimal.class)
         );
 
-        Predicate predicate = criteriaBuilder.equal(relation.get("stuId"), studentDO.getId());
+        Predicate predicate = criteriaBuilder.equal(relation.get("stuId"), student.getId());
         criteriaQuery.where(predicate);
 
-        TypedQuery<SubjectScoreDO> query = em.createQuery(criteriaQuery);
+        TypedQuery<SubjectScore> query = em.createQuery(criteriaQuery);
         // 获取总结果集
-        List<SubjectScoreDO> subjectScoreDOs = query.getResultList();
-        return subjectScoreDOs.size();
+        List<SubjectScore> subjectScores = query.getResultList();
+        return subjectScores.size();
     }
 }

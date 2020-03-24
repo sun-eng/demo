@@ -1,9 +1,9 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.StudentDO;
+import com.example.demo.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface StudentRepository extends JpaRepository<StudentDO, Long>{
+public interface StudentRepository extends JpaRepository<Student, Long>{
 
     /**
      * 根据学号查询学生数量
@@ -19,6 +19,7 @@ public interface StudentRepository extends JpaRepository<StudentDO, Long>{
      * @param stuNo
      * @return
      */
-    StudentDO findStudentByStuNo(String stuNo);
+    Student findStudentByStuNo(String stuNo);
+
 
 }

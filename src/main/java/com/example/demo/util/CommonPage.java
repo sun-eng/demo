@@ -6,18 +6,18 @@ import java.util.List;
 
 @Data
 public class CommonPage<T> {
-    private Integer pageNum;
-    private Integer pageSize;
+    private Integer offset;
+    private Integer limit;
     private Integer totalPage;
     private Integer total;
     private List<T> list;
 
-    public static <T> CommonPage<T> restPage(List<T> list,int pageNum,int pageSize,int total){
+    public static <T> CommonPage<T> restPage(List<T> list,int offset,int limit,int total){
         CommonPage<T> result = new CommonPage<T>();
-        result.setPageNum(pageNum);
-        result.setPageSize(pageSize);
+        result.setOffset(offset);
+        result.setLimit(limit);
         result.setTotal(total);
-        result.setTotalPage((total + pageSize - 1)/pageSize);
+        result.setTotalPage((total + limit - 1)/limit);
         result.setList(list);
         return result;
     }
