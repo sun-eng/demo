@@ -7,7 +7,7 @@ provider:
     name: DEMO
     path: csp.nhsoft.cn/demo
     version: 1.0
-    target: D：/springFox/demo/demo.json
+    target: D:/springFox/demo/demo.json
 
 spring:
   datasource:
