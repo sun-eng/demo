@@ -1,6 +1,5 @@
 package com.nhsoft.module.demo.data.service.impl;
 
-import com.nhsoft.module.demo.data.exception.DemoException;
 import com.nhsoft.module.demo.data.model.StuTeaSubRelation;
 import com.nhsoft.module.demo.data.model.Student;
 import com.nhsoft.module.demo.data.model.SubjectScore;
@@ -41,7 +40,7 @@ public class StudentServiceImpl implements StudentService {
     private StudentRepository studentRepository;
 
     @Override
-    public List<SubjectScore> findAllByStuNo(String stuNo, Integer offset, Integer limit) throws DemoException {
+    public List<SubjectScore> findAllByStuNo(String stuNo, Integer offset, Integer limit){
         LOGGER.info("StudentServiceImpl findAllByStuNo enter with { stuNo : " + stuNo + ", offset : " + offset + ", limit : " + limit + "}");
         List<SubjectScore> subjectScores = studentCustomRepository.findAllByStuNo(stuNo, offset, limit);
         LOGGER.info("StudentServiceImpl findAllByStuNo exit with subjectScores : " + subjectScores);

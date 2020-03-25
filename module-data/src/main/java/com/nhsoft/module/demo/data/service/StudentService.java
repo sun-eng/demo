@@ -1,7 +1,6 @@
 package com.nhsoft.module.demo.data.service;
 
 
-import com.nhsoft.module.demo.data.exception.DemoException;
 import com.nhsoft.module.demo.data.model.StuTeaSubRelation;
 import com.nhsoft.module.demo.data.model.Student;
 import com.nhsoft.module.demo.data.model.SubjectScore;
@@ -18,7 +17,7 @@ public interface StudentService {
      * @param limit
      * @return
      */
-    List<SubjectScore> findAllByStuNo(String stuNo, Integer offset, Integer limit) throws DemoException;
+    List<SubjectScore> findAllByStuNo(String stuNo, Integer offset, Integer limit);
 
 
     /**

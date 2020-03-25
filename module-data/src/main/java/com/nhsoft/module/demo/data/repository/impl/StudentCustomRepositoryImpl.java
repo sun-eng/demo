@@ -1,6 +1,5 @@
 package com.nhsoft.module.demo.data.repository.impl;
 
-import com.nhsoft.module.demo.data.exception.DemoException;
 import com.nhsoft.module.demo.data.model.Student;
 import com.nhsoft.module.demo.data.model.Subject;
 import com.nhsoft.module.demo.data.model.SubjectScore;
@@ -26,7 +25,7 @@ public class StudentCustomRepositoryImpl implements StudentCustomRepository {
     private StudentRepository studentRepository;
 
     @Override
-    public List<SubjectScore> findAllByStuNo(String stuNo, Integer offset, Integer limit) throws DemoException {
+    public List<SubjectScore> findAllByStuNo(String stuNo, Integer offset, Integer limit) {
         Student student = studentRepository.findStudentByStuNo(stuNo);
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<SubjectScore> criteriaQuery = criteriaBuilder.createQuery(SubjectScore.class);

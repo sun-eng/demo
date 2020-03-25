@@ -1,7 +1,6 @@
 package com.nhsoft.module.demo.data.repository;
 
 
-import com.nhsoft.module.demo.data.exception.DemoException;
 import com.nhsoft.module.demo.data.model.SubjectScore;
 
 import java.util.List;
@@ -15,7 +14,7 @@ public interface StudentCustomRepository {
      * @param limit
      * @return
      */
-     List<SubjectScore> findAllByStuNo(String stuNo, Integer offset, Integer limit) throws DemoException;
+     List<SubjectScore> findAllByStuNo(String stuNo, Integer offset, Integer limit);
 
 
     /**
