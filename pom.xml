@@ -6,8 +6,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>demo-boot</module>
-        <module>module-data</module>
-        <module>module-data-export</module>
+        <module>module-school</module>
+        <module>module-school-export</module>
     </modules>
     <parent>
         <groupId>com.nhsoft.provider</groupId>
@@ -25,12 +25,12 @@
         <dependencies>
             <dependency>
                 <groupId>com.example</groupId>
-                <artifactId>module-data-export</artifactId>
+                <artifactId>module-school-export</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.example</groupId>
-                <artifactId>module-data</artifactId>
+                <artifactId>module-school</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
         </dependencies>

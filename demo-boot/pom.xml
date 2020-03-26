@@ -56,7 +56,7 @@
 
         <dependency>
             <groupId>com.example</groupId>
-            <artifactId>module-data</artifactId>
+            <artifactId>module-school</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
