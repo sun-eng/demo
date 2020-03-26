@@ -1,5 +1,6 @@
 package com.nhsoft.module.demo.data.service.impl;
 
+import com.nhsoft.module.demo.data.constant.CommonConstant;
 import com.nhsoft.module.demo.data.exception.DemoError;
 import com.nhsoft.module.demo.data.exception.DemoException;
 import com.nhsoft.module.demo.data.model.SubjectTeacher;
@@ -22,8 +23,6 @@ public class TeacherServiceImpl implements TeacherService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TeacherServiceImpl.class);
 
-    private static final String STR_ONE = "1";
-
     @Autowired
     private TeacherRepository teacherRepository;
 
@@ -33,7 +32,7 @@ public class TeacherServiceImpl implements TeacherService {
         LOGGER.info("TeacherServiceImpl findScoreByYear enter with { teaNo : " + teaNo + ", offset : " + offset + ", limit : " + limit + "}");
         Teacher teacher = teacherRepository.readByTeaNo(teaNo);
         String isAdmin = teacher.getIsAdmin();
-        if (!isAdmin.equals(STR_ONE)) {
+        if (!isAdmin.equals(CommonConstant.STR_ONE)) {
             LOGGER.info("TeacherServiceImpl findScoreByYear : 无查询权限");
             throw new DemoException(DemoError.AUTHORITY_FORBIDDEN_ERROR);
         }
@@ -47,7 +46,7 @@ public class TeacherServiceImpl implements TeacherService {
         LOGGER.info("TeacherServiceImpl sumResultByYear enter with { teaNo : " + teaNo + "}");
         Teacher teacher = teacherRepository.readByTeaNo(teaNo);
         String isAdmin = teacher.getIsAdmin();
-        if (!isAdmin.equals(STR_ONE)) {
+        if (!isAdmin.equals(CommonConstant.STR_ONE)) {
             LOGGER.info("TeacherServiceImpl findScoreByYear: 无查询权限");
             throw new DemoException(DemoError.AUTHORITY_FORBIDDEN_ERROR);
         }
@@ -62,7 +61,7 @@ public class TeacherServiceImpl implements TeacherService {
         LOGGER.info("TeacherServiceImpl findScoreByTea enter with { teaNo : " + teaNo + ", offset : " + offset + ", limit : " + limit + "}");
         Teacher teacher = teacherRepository.readByTeaNo(teaNo);
         String isAdmin = teacher.getIsAdmin();
-        if (!isAdmin.equals(STR_ONE)) {
+        if (!isAdmin.equals(CommonConstant.STR_ONE)) {
             LOGGER.info("TeacherServiceImpl findScoreByTea: 无查询权限");
             throw new DemoException(DemoError.AUTHORITY_FORBIDDEN_ERROR);
         }
@@ -76,7 +75,7 @@ public class TeacherServiceImpl implements TeacherService {
         LOGGER.info("TeacherServiceImpl findScoreByTea enter with { teaNo : " + teaNo + "}");
         Teacher teacher = teacherRepository.readByTeaNo(teaNo);
         String isAdmin = teacher.getIsAdmin();
-        if (!isAdmin.equals(STR_ONE)) {
+        if (!isAdmin.equals(CommonConstant.STR_ONE)) {
             LOGGER.info("TeacherServiceImpl findScoreByTea: 无查询权限");
             throw new DemoException(DemoError.AUTHORITY_FORBIDDEN_ERROR);
         }

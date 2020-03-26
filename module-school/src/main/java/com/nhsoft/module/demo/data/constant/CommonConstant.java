@@ -10,4 +10,6 @@ public class CommonConstant {
     public static final String OFFSET = "0";
 
     public static final String LIMIT = "10";
+
+    public static final String STR_ONE = "1";
 }
